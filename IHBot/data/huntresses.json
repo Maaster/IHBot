@@ -1,0 +1,37 @@
+[
+  {
+  "name": "Takenaka Shigeharu",
+  "nick": "Take",
+  "type": "Wisdom",
+  "attribute": "Wind",
+  "skill1": "Skill 1 desc. goes here",
+  "skill2": "Skill 2 desc. goes here",
+  "passive1": "Passive 1 desc. goes here",
+  "passive2": "Passive 2 desc. goes here",
+  "ee1": "ee1 desc.",
+  "ee10": "ee10 desc.",
+  "ee20": "ee20 desc.",
+  "ee30": "ee30 desc.",
+  },
+  {
+  "name": "Yagyu Jubei Mitsuyoshi",
+  "nick": "Yagyu",
+  "type": "Wisdom",
+  "attribute": "Water",
+  "skill1Name": " Six Forms",
+  "skill1": " Jubei Yagyu is a self-made swordsman who attacks the enemy with the least HP 4 times, dealing physical damage of 32%/42%/56% of the attack power each time and physical damage to enemies with HP of 0%/30%/50% or less is added by 0%/84%/112%",
+  "skill2Name": " Lightning Chop",
+  "skill2": " Yagyu Jubei is a secret sword technique that deals 50%/70%/90% physical damage to all enemies in the row with the largest number of enemies, shoots lightning bolts in that row again, and dealing 100%/120%/140% of her attack in physical DMG.",
+  "passive1Name": " Electric Slasher",
+  "passive1": " When Jubei Yagyu defeats an enemy, there is an 80%/80%/100% chance that she will activate the 'Jubei Form' again",
+  "passive2Name": " Ronin",
+  "passive2": " Increases Crit by 3%/4%/5% and Dodge by 3%/4%/5%",
+  "ee1": "+3% crit",
+  "ee10": "+4% dodge ",
+  "ee20": "+25% attack",
+  "ee30": "+20%/40%/60% attack after killing one enemy.",
+  "limited": false,
+  "released": true,
+  "rarity": "SSR"
+  }
+]
