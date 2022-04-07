@@ -49,7 +49,7 @@ namespace IHBot.data
                 .WithTitle(name)
                 .WithDescription(rarity + $"{emotes[0]}" + " " + $"{emotes[1]}")
                 //.WithThumbnailUrl("https://gamewith.akamaized.net/article_tools/dragongirls/gacha/14_c_i.png")
-                .WithFooter("Bugs? Typos? Suggestions? Contact Maaster#1273");
+                .WithFooter("Bugs? Typos? Suggestions? Contact Maaster#1273!");
 
             
 

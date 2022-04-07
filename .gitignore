@@ -361,3 +361,10 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+
+
+#Credentials for Discord Bot
+/Config/Credentials.cs
+/IHBot/Config/Credentials.cs
+/.gitignore.bak
