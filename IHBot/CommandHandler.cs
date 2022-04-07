@@ -30,10 +30,9 @@ namespace IHBot
 
         private void LoadHuntressData()
         {
-            //TODO: Read from /data/.json
-            //string path = Directory.GetCurrentDirectory();
-
-            string data = File.ReadAllText("huntresses.json");
+            string path = Directory.GetCurrentDirectory();
+            path = Path.Combine(path, "data\\huntresses.json");
+            string data = File.ReadAllText(path);
             //data = data.Substring(1, data.Length - 2);
             HuntressJSON jsonObj = JsonConvert.DeserializeObject<HuntressJSON>(data);
             huntresses = jsonObj.huntressList;
