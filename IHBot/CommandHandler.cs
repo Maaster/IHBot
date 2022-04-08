@@ -36,7 +36,7 @@ namespace IHBot
             //data = data.Substring(1, data.Length - 2);
             HuntressJSON jsonObj = JsonConvert.DeserializeObject<HuntressJSON>(data);
             huntresses = jsonObj.huntressList;
-            Console.WriteLine(data);
+            //Console.WriteLine(data);
 
 
         }
@@ -82,12 +82,12 @@ namespace IHBot
 
         private async Task ProcessHuntressCommand(SocketMessage msg)
         {
-            string huntressName = msg.Content.Substring(msg.Content.IndexOf(' ') + 1);
+            string huntressName = msg.Content.Substring(msg.Content.IndexOf(' ') + 1).ToLower();
 
             foreach (Huntress hun in huntresses)
             {
-                string hunName = hun.name;
-                string hunNick = hun.nick;
+                string hunName = hun.name.ToLower();
+                string hunNick = hun.nick.ToLower();
 
                 if(huntressName.Equals(hunName) || huntressName.Equals(hunNick))
                 {
@@ -101,11 +101,33 @@ namespace IHBot
 
         private async Task SendHuntressDataToServer(SocketMessage msg, Huntress hun)
         {
+            //Search for the Huntress' Icon
+            DirectoryInfo info = new DirectoryInfo(@".\icons");
+            FileInfo[] icons = info.GetFiles();
+            string hun_icon = "";
+
+            foreach (FileInfo icon in icons)
+            {
+                if (icon.Name.Contains(hun.name))
+                {
+                    hun_icon = icon.FullName;
+                }
+            }
+
+            //Set Filename for Embed to use
+            hun.SetIconName(Path.GetFileName(hun_icon));
+
+            //Get and Set Emotes needed for the Huntress
             hun.setEmotes(GetEmotes(hun.type, hun.attribute, hun.rarity));
 
+            //Generate Embed
             Embed embed = hun.ToDiscordMessage();
 
-            await msg.Channel.SendMessageAsync("",false,embed);
+            //Send to Channel. If no Icon was found, send it without.
+            if (String.IsNullOrEmpty(hun_icon))
+                await msg.Channel.SendMessageAsync("", false, embed);
+            else
+                await msg.Channel.SendFileAsync(hun_icon, "", false, embed);
             
         }
 
@@ -137,7 +159,7 @@ namespace IHBot
             }
             else
                 emotes[1] = emote;
-            /*
+            
             //Attribute
             emote = _client.Guilds
             .SelectMany(x => x.Emotes)
@@ -149,7 +171,7 @@ namespace IHBot
             }
             else
                 emotes[2] = emote;
-            */
+            
 
 
             return emotes;

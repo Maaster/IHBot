@@ -30,25 +30,30 @@ namespace IHBot.data
         public string rarity;
 
         private Emote[] emotes;
+        private string iconName;
 
         public Embed ToDiscordMessage()
         {
+            //var icon_name = Path.GetFileName("..\\icons\\Octavius.png");
 
             EmbedBuilder builder = new EmbedBuilder();
             //.AddField("Huntress", name + "(" + rarity + ")" + " ; " + type + " ; " + attribute)
                 //.AddField("Type", type)
                 //.AddField("Attr", attribute)
-            builder.AddField(skill1Name + "(S1)", skill1)
-                .AddField(skill2Name + "(US)", skill2)
-                .AddField(passive1Name + "(P1)", passive1)
-                .AddField(passive2Name + "(P2)", passive2)
+            builder.AddField(skill1Name + " (S1)", skill1)
+                .AddField(skill2Name + " (US)", skill2)
+                .AddField(passive1Name + " (P1)", passive1)
+                .AddField(passive2Name + " (P2)", passive2)
                 .AddField("EE Level 1", ee1)
                 .AddField("EE Level 10", ee10)
                 .AddField("EE Level 20", ee20)
                 .AddField("EE Level 30-50", ee30)
                 .WithTitle(name)
+                //TODO: Rework Rarity Emotes on Server - maybe seperate emotes, like :S: :S: :R:?
+                //.WithDescription($"{emotes[2]}" + $"{emotes[0]}" + " " + $"{emotes[1]}")
                 .WithDescription(rarity + $"{emotes[0]}" + " " + $"{emotes[1]}")
                 //.WithThumbnailUrl("https://gamewith.akamaized.net/article_tools/dragongirls/gacha/14_c_i.png")
+                .WithThumbnailUrl($"attachment://{iconName}")
                 .WithFooter("Bugs? Typos? Suggestions? Contact Maaster#1273!");
 
             
@@ -59,6 +64,11 @@ namespace IHBot.data
         public void setEmotes(Emote[] emotes)
         {
             this.emotes = emotes;
+        }
+
+        internal void SetIconName(string iconName)
+        {
+            this.iconName = iconName.Replace(' ','_');
         }
     }
 }
