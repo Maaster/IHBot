@@ -51,11 +51,21 @@ namespace IHBot
             if (!message.Content.StartsWith(BotConfig.PREFIX))
                 return;
 
+            //Help command
             if(message.Content.StartsWith(BotConfig.PREFIX+"help"))
             {
                 await message.Channel.SendMessageAsync("Test Help Message");
+                return;
+            }
+            //Test all Huntresses command. Just usable by me since it floods channels. Maybe use ID here to future-proof and put it in BotConfig? Im too lazy to look up my ID.
+            else if(message.Content.StartsWith(BotConfig.PREFIX+"testall") && message.Author.Username.Equals("Maaster") && message.Author.DiscriminatorValue.Equals(1273))
+            {
+                //await message.Channel.SendMessageAsync("Test all!");
+                await TestPrintAll(message);
+                return;
             }
             
+            //Get command arguments
             string[] cmd = message.Content.Split(' ');
             /*
             string command = "";
@@ -68,14 +78,26 @@ namespace IHBot
                 return;
             }
 
-            switch(cmd[0])
+            //Remove prefix since we already tested for it above.
+            switch(cmd[0].Remove(0,1))
             {
-                case "!huntress":
+                case "huntress":
                     await ProcessHuntressCommand(message);
                     break;
                 default:
-                    Console.WriteLine("command not found");
+                    await message.Channel.SendMessageAsync("Command not found!");
+                    Console.WriteLine("Command not found");
                     break;
+            }
+
+        }
+
+        private async Task TestPrintAll(SocketMessage msg)
+        {
+            foreach(Huntress hun in huntresses)
+            {
+                await SendHuntressDataToServer(msg, hun);
+                await Task.Delay(2000);
             }
 
         }
@@ -96,6 +118,7 @@ namespace IHBot
                 }
             }
 
+            await msg.Channel.SendMessageAsync("Huntress not found!");
             Console.WriteLine("Huntress not found!");
         }
 

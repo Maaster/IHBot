@@ -63,7 +63,7 @@
     <None Update="icons\Hannibal.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="icons\Helen.png">
+    <None Update="icons\Helen of Troy.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="icons\Himiko.png">
