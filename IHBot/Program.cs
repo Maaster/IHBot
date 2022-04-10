@@ -15,6 +15,9 @@ namespace IHBot
 
         public async Task MainAsync()
         {
+            //TO PUBLISH FOR LINUX, USE THE PUBLISH CONTEXT MENU AND SELECT LINUX-ARM64 AS RUNTIME ON RELEASE.
+
+
             _client = new DiscordSocketClient();
             _handler = new CommandHandler(_client);
 

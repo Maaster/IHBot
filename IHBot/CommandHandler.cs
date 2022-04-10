@@ -3,6 +3,7 @@ using Discord.Commands;
 using Discord.WebSocket;
 using IHBot.Config;
 using IHBot.data;
+using IHBot.Tools;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -31,7 +32,9 @@ namespace IHBot
         private void LoadHuntressData()
         {
             string path = Directory.GetCurrentDirectory();
-            path = Path.Combine(path, "data\\huntresses.json");
+            //path = Path.Combine(path, "data\\huntresses.json");
+            path = Path.Combine(path, "data");//.huntresses.json");
+            path = Path.Combine(path, "huntresses.json");
             string data = File.ReadAllText(path);
             //data = data.Substring(1, data.Length - 2);
             HuntressJSON jsonObj = JsonConvert.DeserializeObject<HuntressJSON>(data);
@@ -54,7 +57,7 @@ namespace IHBot
             //Help command
             if(message.Content.StartsWith(BotConfig.PREFIX+"help"))
             {
-                await message.Channel.SendMessageAsync("Test Help Message");
+                await message.Channel.SendMessageAsync("Search for Huntress Info via !huntress <NAME>.");
                 return;
             }
             //Test all Huntresses command. Just usable by me since it floods channels. Maybe use ID here to future-proof and put it in BotConfig? Im too lazy to look up my ID.
@@ -79,7 +82,7 @@ namespace IHBot
             }
 
             //Remove prefix since we already tested for it above.
-            switch(cmd[0].Remove(0,1))
+            switch(cmd[0].Remove(0,1).ToLower())
             {
                 case "huntress":
                     await ProcessHuntressCommand(message);
@@ -110,7 +113,7 @@ namespace IHBot
             string queriedName = msg.Content.Substring(msg.Content.IndexOf(' ') + 1).ToLower();
 
             //Check if empty - if no name entered, IndexOf returns -1 and Substring returns the same string, thus queriedName will be the original message.
-            if(String.IsNullOrEmpty(queriedName) || msg.Content.Equals(queriedName))
+            if(String.IsNullOrEmpty(queriedName) || msg.Content.ToLower().Equals(queriedName))
             {
                 await msg.Channel.SendMessageAsync("No huntress name entered!");
                 return;
@@ -125,8 +128,11 @@ namespace IHBot
                 //If the name is a complete match or starts with it, use it.
                 if(queriedName.Equals(hunName) || hunName.StartsWith(queriedName))
                 {
-                    //await SendHuntressDataToServer(msg, hun);
-                    //return;
+                    matches.Add(hun);
+                }
+                //Try full name for a simple typo, done by Levenshtein Distance. TODO: Switch to Damerau-Levenshtein Distance.
+                else if(LevenshteinDistance.EditDistance(hunName, queriedName) <= BotConfig.LEV_DISTANCE)
+                {
                     matches.Add(hun);
                 }
                 //Full name wasnt a match, try all the nicks, seperated by ;
@@ -136,8 +142,6 @@ namespace IHBot
                     {
                         if(queriedName.Equals(nick))
                         {
-                            //await SendHuntressDataToServer(msg, hun);
-                            //return;
                             matches.Add(hun);
                         }
                     }
@@ -171,7 +175,9 @@ namespace IHBot
         private async Task SendHuntressDataToServer(SocketMessage msg, Huntress hun)
         {
             //Search for the Huntress' Icon
-            DirectoryInfo info = new DirectoryInfo(@".\icons");
+            string path = Directory.GetCurrentDirectory();
+            path = Path.Combine(path, "icons");
+            DirectoryInfo info = new DirectoryInfo(path);
             FileInfo[] icons = info.GetFiles();
             string hun_icon = "";
 
