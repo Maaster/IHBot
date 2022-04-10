@@ -904,6 +904,27 @@
             "rarity": "SSR"
         },
         {
+            "name": "Akechi Mitsuhide",
+            "nick": "Mitsu",
+            "type": "Wisdom",
+            "attribute": "Water",
+            "skill1Name": "Frost Torrent",
+            "skill1": "Akechi wields elemental power against middle- and back-row enemies, dealing 54%/72%/90% of her ATK in Magical DMG with a 48%/58%/72% chance to add 1 stack of Frost Mark.",
+            "skill2Name": "Ice Dragon's Roar",
+            "skill2": "Akechi commands an ice dragon to deal 120%/160%/200% of her ATK in Magical Damage to all enemies.",
+            "passive1Name": "Frostbound",
+            "passive1": "Akechi deals an additional 96%/128%/160% of her ATK in Magical DMG to frozen targets.",
+            "passive2Name": "Absolute Ruler",
+            "passive2": "Increases her ATK by 15%/20%/25% and her Crit by3 %/4%/5%.",
+            "ee1": "ATK +15%.",
+            "ee10": "Crit +4%.",
+            "ee20": "ATK +25%.",
+            "ee30": "Whenever an enemy has been frozen, gain a 15%/30%/50% chance to immediately use Frigid Snow Dance. [TL Error ingame - this means her S1.]",
+            "limited": false,
+            "released": true,
+            "rarity": "SSR"
+        },
+        {
             "name": "",
             "nick": "",
             "type": "",
