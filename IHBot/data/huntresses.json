@@ -883,6 +883,27 @@
             "rarity": "SSR"
         },
         {
+            "name": "Zhao Yun",
+            "nick": "yun",
+            "type": "Defensive",
+            "attribute": "Earth",
+            "skill1Name": "Total Annihilation",
+            "skill1": "Zhao Yun deals 84%/112%/140% of her ATK in Physical DMG to enemies in the front and middle rows with a 50%/75%/100% chance to add 1 stack of Hate Mark to targets struck.",
+            "skill2Name": "Spear of the Dragon",
+            "skill2": "Zhao Yun attacks the enemy with the most Hate Marks a total of 5 times, the first times dealing 20%/30%/40% of her ATK in Physical DMG, and the rest progressively increasing by 12%/15%/20% each. Each Hate Mark the target bears increases Zhao Yun's Crit by 20% in this attack.",
+            "passive1Name": "Deadly Gaze",
+            "passive1": "In battle, Zhao Yun takes 20%/30%/40% less of all damage. This effect cannot be dispelled. Each time Zhao Yun is attacked by the enemy, she inflicts 1/2/3 stack(s) of Hate Mark on the attacker.",
+            "passive2Name": "Gentian",
+            "passive2": "Increases her ATK by 15%/20%/25% and Crit by 3%/4%/5%",
+            "ee1": "Hit +3%.",
+            "ee10": "Speed +10.",
+            "ee20": "Final DMG Reduce +25%.",
+            "ee30": "When stuck by an enemy's normal attack, immediately recover 0%/100%/100% of ATK in HP and counter against the attacker with a normal attack. EE50: When an ally is slain by an enemy, Zhao Yun will us an US again against this enemy.",
+            "limited": false,
+            "released": true,
+            "rarity": "SSR"
+        },
+        {
             "name": "",
             "nick": "",
             "type": "",
