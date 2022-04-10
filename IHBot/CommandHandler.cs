@@ -104,17 +104,39 @@ namespace IHBot
 
         private async Task ProcessHuntressCommand(SocketMessage msg)
         {
+            //Get Huntress Name entered
             string huntressName = msg.Content.Substring(msg.Content.IndexOf(' ') + 1).ToLower();
 
+            if(String.IsNullOrEmpty(huntressName))
+            {
+
+                await msg.Channel.SendMessageAsync("No huntress name entered!");
+                Console.WriteLine("Huntress not found!");
+                return;
+            }
+
+            //Search for Huntress by entered name - complete match of name or nickname
             foreach (Huntress hun in huntresses)
             {
                 string hunName = hun.name.ToLower();
-                string hunNick = hun.nick.ToLower();
+                string[] hunNick = hun.nick.ToLower().Split(';');
 
-                if(huntressName.Equals(hunName) || huntressName.Equals(hunNick))
+                if(huntressName.Equals(hunName))
                 {
                     await SendHuntressDataToServer(msg, hun);
                     return;
+                }
+                //Full name wasnt a match, try all the nicks, seperated by ;
+                else
+                {
+                    foreach(string nick in hunNick)
+                    {
+                        if(huntressName.Equals(nick))
+                        {
+                            await SendHuntressDataToServer(msg, hun);
+                            return;
+                        }
+                    }
                 }
             }
 

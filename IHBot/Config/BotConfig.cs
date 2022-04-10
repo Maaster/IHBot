@@ -9,5 +9,6 @@ namespace IHBot.Config
     internal class BotConfig
     {
         public static string PREFIX = "!";
+        public static int LEV_DISTANCE = 2;
     }
 }

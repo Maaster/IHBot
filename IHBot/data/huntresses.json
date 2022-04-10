@@ -65,7 +65,7 @@
         },
         {
             "name": "Richard",
-            "nick": "Minamoto",
+            "nick": "",
             "type": "Defensive",
             "attribute": "Light",
             "skill1Name": "Order to Assault",
@@ -212,7 +212,7 @@
         },
         {
             "name": "Oda Nobunaga",
-            "nick": "Nobu",
+            "nick": "Nobu;Oda",
             "type": "Defensive",
             "attribute": "Fire",
             "skill1Name": "Triple Slam",
