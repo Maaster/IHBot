@@ -104,14 +104,15 @@ namespace IHBot
 
         private async Task ProcessHuntressCommand(SocketMessage msg)
         {
+            List<Huntress> matches = new List<Huntress>();
+
             //Get Huntress Name entered
-            string huntressName = msg.Content.Substring(msg.Content.IndexOf(' ') + 1).ToLower();
+            string queriedName = msg.Content.Substring(msg.Content.IndexOf(' ') + 1).ToLower();
 
-            if(String.IsNullOrEmpty(huntressName))
+            //Check if empty - if no name entered, IndexOf returns -1 and Substring returns the same string, thus queriedName will be the original message.
+            if(String.IsNullOrEmpty(queriedName) || msg.Content.Equals(queriedName))
             {
-
                 await msg.Channel.SendMessageAsync("No huntress name entered!");
-                Console.WriteLine("Huntress not found!");
                 return;
             }
 
@@ -121,27 +122,50 @@ namespace IHBot
                 string hunName = hun.name.ToLower();
                 string[] hunNick = hun.nick.ToLower().Split(';');
 
-                if(huntressName.Equals(hunName))
+                //If the name is a complete match or starts with it, use it.
+                if(queriedName.Equals(hunName) || hunName.StartsWith(queriedName))
                 {
-                    await SendHuntressDataToServer(msg, hun);
-                    return;
+                    //await SendHuntressDataToServer(msg, hun);
+                    //return;
+                    matches.Add(hun);
                 }
                 //Full name wasnt a match, try all the nicks, seperated by ;
                 else
                 {
                     foreach(string nick in hunNick)
                     {
-                        if(huntressName.Equals(nick))
+                        if(queriedName.Equals(nick))
                         {
-                            await SendHuntressDataToServer(msg, hun);
-                            return;
+                            //await SendHuntressDataToServer(msg, hun);
+                            //return;
+                            matches.Add(hun);
                         }
                     }
                 }
             }
 
-            await msg.Channel.SendMessageAsync("Huntress not found!");
-            Console.WriteLine("Huntress not found!");
+            //If no match was found, tell the user
+            if (matches.Count == 0)
+            {
+                await msg.Channel.SendMessageAsync("Huntress not found!");
+                Console.WriteLine("Huntress not found!");
+            }
+            //If only one match was found, just send it
+            else if(matches.Count == 1)
+            {
+                await SendHuntressDataToServer(msg, matches.First());
+            }
+            //Multiple matches found, tell the user.
+            else
+            {
+                string names = "Did you mean: `";
+                foreach (Huntress hun in matches)
+                {
+                    names += hun.name + "`,`";
+                }
+                names = names.Substring(0, names.Length - 2) + "?";
+                await msg.Channel.SendMessageAsync(names);
+            }
         }
 
         private async Task SendHuntressDataToServer(SocketMessage msg, Huntress hun)
