@@ -34,12 +34,14 @@ namespace IHBot.data
 
         public Embed ToDiscordMessage()
         {
+            string strRarity = "`"+rarity+"`";
+
             EmbedBuilder builder = new EmbedBuilder();
             //.AddField("Huntress", name + "(" + rarity + ")" + " ; " + type + " ; " + attribute)
             //.AddField("Type", type)
             //.AddField("Attr", attribute)
-            builder.WithTitle(name + " " + rarity + " " + $"{emotes[0]}" + " " + $"{emotes[1]}")
-                //.WithDescription()
+            builder.WithTitle(name + " " + strRarity + " " + $"{emotes[0]}" + " " + $"{emotes[1]}")
+                //.WithDescription($"{emotes[2]}")
                 .AddField(skill1Name + " (S1)", skill1)
                 .AddField(skill2Name + " (US)", skill2)
                 .AddField(passive1Name + " (P1)", passive1)

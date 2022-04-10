@@ -182,8 +182,8 @@ namespace IHBot
             }
             else
                 emotes[1] = emote;
-            
-            //Attribute
+            /*
+            //Rarity
             emote = _client.Guilds
             .SelectMany(x => x.Emotes)
             .FirstOrDefault(x => x.Name.IndexOf(
@@ -194,7 +194,7 @@ namespace IHBot
             }
             else
                 emotes[2] = emote;
-            
+            */
 
 
             return emotes;
