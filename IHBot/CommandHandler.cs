@@ -51,7 +51,7 @@ namespace IHBot
                 return;
 
             //If Message isnt a command
-            if (!message.Content.StartsWith(BotConfig.PREFIX))
+            if (!message.Content.StartsWith(BotConfig.PREFIX) || message.Content.Length < 3)
                 return;
 
             //Help command
@@ -77,7 +77,7 @@ namespace IHBot
             //if(String.IsNullOrEmpty(command))
             if(cmd == null || cmd.Length == 0)
             {
-                Console.WriteLine("Command is empty");
+                //Console.WriteLine("Command is empty");
                 return;
             }
 
@@ -87,12 +87,164 @@ namespace IHBot
                 case "huntress":
                     await ProcessHuntressCommand(message);
                     break;
+                case "list":
+                    await ProcessListCommand(message);
+                    break;
                 default:
                     await message.Channel.SendMessageAsync("Command not found!");
-                    Console.WriteLine("Command not found");
+                    //Console.WriteLine("Command not found");
                     break;
             }
 
+        }
+
+        private async Task ProcessListCommand(SocketMessage msg)
+        {
+            string queriedName = msg.Content.Substring(msg.Content.IndexOf(' ') + 1).ToLower();
+
+            //Check if empty - if no name entered, IndexOf returns -1 and Substring returns the same string, thus queriedName will be the original message.
+            if (String.IsNullOrEmpty(queriedName) || msg.Content.ToLower().Equals(queriedName))
+            {
+                await msg.Channel.SendMessageAsync("No huntress name entered!");
+                return;
+            }
+            
+            //If searching for Elements
+            if(BotConfig.ELEMENTS.Contains(queriedName))
+            {
+                SendElementInfo(msg, queriedName);
+            }
+            //If searching for CC
+            else if(BotConfig.CC_NAMES.Contains(queriedName))
+            {
+                SendCCInfo(msg, queriedName);
+            }
+            else
+            {
+                await msg.Channel.SendMessageAsync("No valid input detected! Valid inputs are: `" + String.Join(", ", BotConfig.ELEMENTS) + "` for elements or `" + String.Join(", ", BotConfig.CC_NAMES) + "` for CC");
+            }
+
+
+            return;
+        }
+
+        private async void SendCCInfo(SocketMessage msg, string queriedName)
+        {
+            List<Huntress> matches = new List<Huntress>();
+
+            string ccInfo = "";
+
+            //Looks like /r/shittyprogramming but eh, I cant be arsed to find a better solution.
+            switch (queriedName)
+            {
+                case "freeze":
+                    ccInfo = StatusInfo.FREEZE;
+                    queriedName = "Frost Mark";
+                    break;
+                case "stun":
+                    ccInfo = StatusInfo.STUN;
+                    break;
+                case "vacant":
+                    ccInfo = StatusInfo.VACANT;
+                    break;
+                case "flying":
+                    ccInfo = StatusInfo.FLYING;
+                    break;
+                case "burn":
+                    ccInfo = StatusInfo.BURN;
+                    //queriedName = "Burn Mark";
+                    break;
+                case "hate":
+                    ccInfo = StatusInfo.HATE;
+                    break;
+                case "silence":
+                    ccInfo = StatusInfo.SILENCE;
+                    break;
+                case "pierce":
+                    ccInfo = StatusInfo.PIERCE;
+                    queriedName = "armor-piercing";
+                    break;
+                case "curse":
+                    ccInfo = StatusInfo.CURSE;
+                    break;
+                case "weak":
+                    ccInfo = StatusInfo.WEAK;
+                    break;
+                case "tear":
+                    ccInfo = StatusInfo.TEAR;
+                    break;
+                case "slow":
+                    ccInfo = StatusInfo.SLOW;
+                    break;
+                case "realm":
+                    ccInfo = StatusInfo.REALM;
+                    break;
+                case "blind":
+                    ccInfo = StatusInfo.BLIND;
+                    break;
+                case "entwined":
+                    ccInfo = StatusInfo.ENTWINED;
+                    queriedName = "entwining";
+                    break;
+                default:
+                    await msg.Channel.SendMessageAsync("Status not found! This shouldnt happen lol, please ping Maaster#1273!");
+                    break;
+            }
+
+            //Search all skills for the status and add them to list
+            foreach(Huntress match in huntresses)
+            {
+                if(match.skill1.Contains(queriedName, StringComparison.OrdinalIgnoreCase)
+                    || match.skill2.Contains(queriedName, StringComparison.OrdinalIgnoreCase)
+                    || match.passive1.Contains(queriedName, StringComparison.OrdinalIgnoreCase)
+                    || match.passive2.Contains(queriedName, StringComparison.OrdinalIgnoreCase))
+                    matches.Add(match);
+            }
+
+            string names = "";
+
+            //Fail-safe - shouldnt happen.
+            if (matches.Count > 0)
+            {
+                //Concat all names for display in Discord
+                foreach (Huntress match in matches)
+                {
+                    names += "`" + match.name + "` , ";
+                }
+                //Trim end so it looks nice.
+                names = names.Remove(names.Length - 3);
+            }
+            else
+            {
+                Console.WriteLine("No matches found in CCInfo for " + queriedName);
+            }
+            await msg.Channel.SendMessageAsync(ccInfo + "\n\n The following Huntresses deal with this Status:\n" + names);
+        }
+
+        private async void SendElementInfo(SocketMessage msg, string queriedName)
+        {
+            List<Huntress> matches = new List<Huntress>();
+
+            //Go through all huntresses, looking to match attribute
+            foreach(Huntress huntress in huntresses)
+            {
+                if(huntress.attribute.ToLower().Equals(queriedName))
+                    matches.Add(huntress);
+            }
+
+            string names = "";
+
+            //Concat all names for display in Discord
+            foreach(Huntress match in matches)
+            {
+                names += "`" + match.name + "` , ";
+            }
+
+            //Trim end so it looks nice.
+            names = names.Remove(names.Length - 3);
+
+
+            await msg.Channel.SendMessageAsync("The following Huntresses are " + queriedName + ": " + names);
         }
 
         private async Task TestPrintAll(SocketMessage msg)
@@ -152,7 +304,7 @@ namespace IHBot
             if (matches.Count == 0)
             {
                 await msg.Channel.SendMessageAsync("Huntress not found!");
-                Console.WriteLine("Huntress not found!");
+                //Console.WriteLine("Huntress not found!");
             }
             //If only one match was found, just send it
             else if(matches.Count == 1)
