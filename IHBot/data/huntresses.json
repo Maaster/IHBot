@@ -934,7 +934,7 @@
             "skill2Name": "...Folding fan tip?",
             "skill2": "Chiyome jumps into the air, attacking 8 times at random. Each attack deals 30%/60%/100% of her ATK in Physical DMG.",
             "passive1Name": "...The art of Transformation?",
-            "passive1": "When Chiyome is attacked (by S1, US or normal attack), she moves to a random free square on your side. Then, she creates a copy of herself where she was originally. If there a no free squares, she switched places with a random copy. The copy inherits 60%/80%/100% of Chiyome's Stats and takes the damage for that attacks instead.",
+            "passive1": "When Chiyome is attacked (by S1, US or normal attack), she moves to a random free square on your side. Then, she creates a copy of herself where she was originally. If there a no free squares, she switched places with a random copy. The copy inherits 60%/80%/100% of Chiyome's Stats and takes the damage for that attack instead.",
             "passive2Name": "...Gyokumo Ryusui?",
             "passive2": "Increases her Hit and Crit by 3%/4%/5%.",
             "ee1": "HP +15%.",
