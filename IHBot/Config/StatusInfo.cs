@@ -23,6 +23,7 @@ namespace IHBot.Config
         public static string REALM = "<Realm Skill> When multiple realms have been cast in the battle, the realm that will occupy the battlefield will be based on the Might of the two teams vying to expand the realms. The team with the lower Might will have their realm covered by the team with the higher Might.";
         public static string BLIND = "<Blinded> Decreases the target's Hit by 30%.";
         public static string ENTWINED = "<Entwined> Unable to any action or dodge for 2 turns.";
+        public static string SHIELD = "Gives the Huntress (or all allies) a shield, the strength being a percentage of her ATK.";
 
     }
 }

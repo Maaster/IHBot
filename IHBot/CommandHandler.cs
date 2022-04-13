@@ -57,7 +57,9 @@ namespace IHBot
             //Help command
             if(message.Content.StartsWith(BotConfig.PREFIX+"help"))
             {
-                await message.Channel.SendMessageAsync("Search for Huntress Info via !huntress <NAME>.");
+                await message.Channel.SendMessageAsync("Search for Huntress Info via !huntress <NAME>.\n" +
+                    "Search for Status Info via !list <STATUS>.\n" +
+                    "Search for a list of huntresses of an element via !list <ELEMENT>.");
                 return;
             }
             //Test all Huntresses command. Just usable by me since it floods channels. Maybe use ID here to future-proof and put it in BotConfig? Im too lazy to look up my ID.
@@ -70,11 +72,7 @@ namespace IHBot
             
             //Get command arguments
             string[] cmd = message.Content.Split(' ');
-            /*
-            string command = "";
-            command = message.Content.Substring(1, message.Content.IndexOf(' '));
-            */
-            //if(String.IsNullOrEmpty(command))
+            //Check for empty. Shouldnt happen as we test for it beforehand, but just to be sure.
             if(cmd == null || cmd.Length == 0)
             {
                 //Console.WriteLine("Command is empty");
@@ -186,6 +184,9 @@ namespace IHBot
                     ccInfo = StatusInfo.ENTWINED;
                     queriedName = "entwining";
                     break;
+                case "shield":
+                    ccInfo = StatusInfo.SHIELD;
+                    break;
                 default:
                     await msg.Channel.SendMessageAsync("Status not found! This shouldnt happen lol, please ping Maaster#1273!");
                     break;
@@ -197,7 +198,8 @@ namespace IHBot
                 if(match.skill1.Contains(queriedName, StringComparison.OrdinalIgnoreCase)
                     || match.skill2.Contains(queriedName, StringComparison.OrdinalIgnoreCase)
                     || match.passive1.Contains(queriedName, StringComparison.OrdinalIgnoreCase)
-                    || match.passive2.Contains(queriedName, StringComparison.OrdinalIgnoreCase))
+                    || match.passive2.Contains(queriedName, StringComparison.OrdinalIgnoreCase)
+                    || match.ee30.Contains(queriedName, StringComparison.OrdinalIgnoreCase))
                     matches.Add(match);
             }
 
