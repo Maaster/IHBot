@@ -3,6 +3,7 @@ using Discord.Commands;
 using Discord.WebSocket;
 using IHBot.Config;
 using IHBot.data;
+using IHBot.data.tierList;
 using IHBot.Tools;
 using Newtonsoft.Json;
 using System;
@@ -20,6 +21,7 @@ namespace IHBot
         private readonly DiscordSocketClient _client;
         private List<Huntress> huntresses;
         private List<TierData> tierDataList;
+        private List<TierList> tierListsRoles;
 
         // Retrieve client and CommandService instance via ctor
         public CommandHandler(DiscordSocketClient client)
@@ -29,6 +31,7 @@ namespace IHBot
 
             LoadHuntressData();
             LoadTierListData();
+            LoadRolesTierList();
         }
 
         private void LoadHuntressData()
@@ -60,6 +63,22 @@ namespace IHBot
 
 
         }
+
+        private void LoadRolesTierList()
+        {
+            string path = Directory.GetCurrentDirectory();
+            //path = Path.Combine(path, "data\\huntresses.json");
+            path = Path.Combine(path, "data");//.huntresses.json");
+            path = Path.Combine(path, "TierList.json");
+            string data = File.ReadAllText(path);
+            //data = data.Substring(1, data.Length - 2);
+            TierListJSON jsonObj = JsonConvert.DeserializeObject<TierListJSON>(data);
+            tierListsRoles = jsonObj.list;
+            //Console.WriteLine(data);
+
+
+        }
+
 
         public async Task HandleMessage(SocketMessage message)
         {
@@ -116,10 +135,27 @@ namespace IHBot
 
         }
 
+
         #region Tier List Commands
 
         private async Task ProcessTierCommand(SocketMessage msg)
         {
+            //Check if Role was queried
+            string queriedName = msg.Content.Substring(msg.Content.IndexOf(' ') + 1).ToLower();
+
+            if(BotConfig.ROLES.Contains(queriedName.ToLower()))
+            {
+                foreach(TierList currList in tierListsRoles)
+                {
+                    if(currList.type.Equals(queriedName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        await msg.Channel.SendMessageAsync("", false, currList.ToDiscordMessage());
+                    }
+                }
+
+                return;
+            }
+
             //Get correct huntress by name
             Huntress huntress = await GetNameFromQueryAsync(msg);
 
@@ -127,25 +163,25 @@ namespace IHBot
             if (huntress == null)
                 return;
 
-            TierData tierData = null;
+            TierData list = null;
 
             //Find TierData by given name
             foreach (TierData data in tierDataList)
             {
                 if (huntress.name.Equals(data.name))
                 {
-                    tierData = data;
+                    list = data;
                     break;
                 }
             }
 
-            if(tierData == null)
+            if(list == null)
             {
                 Console.WriteLine("Huntress not found in ProcessTier");
                 await msg.Channel.SendMessageAsync("Huntress wasnt found in Tier Data yet! We are working on it :)");
                 return;
             }
-            await msg.Channel.SendMessageAsync("", false, tierData.ToDiscordMessage());
+            await msg.Channel.SendMessageAsync("", false, list.ToDiscordMessage());
 
         }
         #endregion

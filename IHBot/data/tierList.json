@@ -1,0 +1,64 @@
+﻿{
+    "tierList": [
+        {
+            "type": "Offensive",
+            "tiers": [
+                {
+                    "tier": "SS",
+                    "released": "",
+                    "unreleased": "Cleopatra, Carmen, Octavia (UR), Mochizuki Chiyome (UR)"
+                },
+                {
+                    "tier": "S",
+                    "released": "Mochizuki Chiyome, Octavius, Merline, Tamamo-no-Mae, Akechi Mitsuhid",
+                    "unreleased": "Reginleif, Enako, Thor, Date Masamune, Jing Ke, Huang Zhong (UR), Tokugawa Ieyasu (UR)"
+                },
+                {
+                    "tier": "A",
+                    "released": "Takenaka Shigeharu, Himiko, Sima Yi, Richard",
+                    "unreleased": "Marie Rose, Kasumi, Hercules"
+                }
+            ]
+        },
+        {
+            "type": "Defensive",
+            "tiers": [
+                {
+                    "tier": "SS",
+                    "released": "",
+                    "unreleased": ""
+                },
+                {
+                    "tier": "S",
+                    "released": "",
+                    "unreleased": ""
+                },
+                {
+                    "tier": "A",
+                    "released": "",
+                    "unreleased": ""
+                }
+            ]
+        },
+        {
+            "type": "Role x",
+            "tiers": [
+                {
+                    "tier": "SS",
+                    "released": "",
+                    "unreleased": ""
+                },
+                {
+                    "tier": "S",
+                    "released": "",
+                    "unreleased": ""
+                },
+                {
+                    "tier": "A",
+                    "released": "",
+                    "unreleased": ""
+                }
+            ]
+        }
+    ]
+}

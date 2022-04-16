@@ -27,6 +27,9 @@
     <None Update="data\tierData.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="data\tierList.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="icons\Akechi Mitsuhide.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
