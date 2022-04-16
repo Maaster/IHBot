@@ -24,6 +24,9 @@
     <None Update="data\huntresses.json.bak">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
+    <None Update="data\tierData.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="icons\Akechi Mitsuhide.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

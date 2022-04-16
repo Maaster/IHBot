@@ -19,6 +19,7 @@ namespace IHBot
     {
         private readonly DiscordSocketClient _client;
         private List<Huntress> huntresses;
+        private List<TierData> tierDataList;
 
         // Retrieve client and CommandService instance via ctor
         public CommandHandler(DiscordSocketClient client)
@@ -27,6 +28,7 @@ namespace IHBot
             huntresses = new List<Huntress>();
 
             LoadHuntressData();
+            LoadTierListData();
         }
 
         private void LoadHuntressData()
@@ -39,6 +41,21 @@ namespace IHBot
             //data = data.Substring(1, data.Length - 2);
             HuntressJSON jsonObj = JsonConvert.DeserializeObject<HuntressJSON>(data);
             huntresses = jsonObj.huntressList;
+            //Console.WriteLine(data);
+
+
+        }
+
+        private void LoadTierListData()
+        {
+            string path = Directory.GetCurrentDirectory();
+            //path = Path.Combine(path, "data\\huntresses.json");
+            path = Path.Combine(path, "data");//.huntresses.json");
+            path = Path.Combine(path, "tierData.json");
+            string data = File.ReadAllText(path);
+            //data = data.Substring(1, data.Length - 2);
+            TierDataJSON jsonObj = JsonConvert.DeserializeObject<TierDataJSON>(data);
+            tierDataList = jsonObj.dataList;
             //Console.WriteLine(data);
 
 
@@ -88,6 +105,9 @@ namespace IHBot
                 case "list":
                     await ProcessListCommand(message);
                     break;
+                case "tier":
+                    await ProcessTierCommand(message);
+                    break;
                 default:
                     await message.Channel.SendMessageAsync("Command not found!");
                     //Console.WriteLine("Command not found");
@@ -96,6 +116,41 @@ namespace IHBot
 
         }
 
+        #region Tier List Commands
+
+        private async Task ProcessTierCommand(SocketMessage msg)
+        {
+            //Get correct huntress by name
+            Huntress huntress = await GetNameFromQueryAsync(msg);
+
+            //If not found, user is already informed.
+            if (huntress == null)
+                return;
+
+            TierData tierData = null;
+
+            //Find TierData by given name
+            foreach (TierData data in tierDataList)
+            {
+                if (huntress.name.Equals(data.name))
+                {
+                    tierData = data;
+                    break;
+                }
+            }
+
+            if(tierData == null)
+            {
+                Console.WriteLine("Huntress not found in ProcessTier");
+                await msg.Channel.SendMessageAsync("Huntress wasnt found in Tier Data yet! We are working on it :)");
+                return;
+            }
+            await msg.Channel.SendMessageAsync("", false, tierData.ToDiscordMessage());
+
+        }
+        #endregion
+
+        #region List Commands
         private async Task ProcessListCommand(SocketMessage msg)
         {
             string queriedName = msg.Content.Substring(msg.Content.IndexOf(' ') + 1).ToLower();
@@ -248,82 +303,17 @@ namespace IHBot
 
             await msg.Channel.SendMessageAsync("The following Huntresses are " + queriedName + ": " + names);
         }
+        #endregion
 
-        private async Task TestPrintAll(SocketMessage msg)
-        {
-            foreach(Huntress hun in huntresses)
-            {
-                await SendHuntressDataToServer(msg, hun);
-                await Task.Delay(2000);
-            }
-
-        }
-
+        #region Huntress Info
         private async Task ProcessHuntressCommand(SocketMessage msg)
         {
-            List<Huntress> matches = new List<Huntress>();
-
-            //Get Huntress Name entered
-            string queriedName = msg.Content.Substring(msg.Content.IndexOf(' ') + 1).ToLower();
-
-            //Check if empty - if no name entered, IndexOf returns -1 and Substring returns the same string, thus queriedName will be the original message.
-            if(String.IsNullOrEmpty(queriedName) || msg.Content.ToLower().Equals(queriedName))
-            {
-                await msg.Channel.SendMessageAsync("No huntress name entered!");
+            Huntress huntress = await GetNameFromQueryAsync(msg);
+            if(huntress == null)
                 return;
-            }
 
-            //Search for Huntress by entered name - complete match of name or nickname
-            foreach (Huntress hun in huntresses)
-            {
-                string hunName = hun.name.ToLower();
-                string[] hunNick = hun.nick.ToLower().Split(';');
+            await SendHuntressDataToServer(msg, huntress);
 
-                //If the name is a complete match or starts with it, use it.
-                if(queriedName.Equals(hunName) || hunName.StartsWith(queriedName))
-                {
-                    matches.Add(hun);
-                }
-                //Try full name for a simple typo, done by Levenshtein Distance. TODO: Switch to Damerau-Levenshtein Distance.
-                else if(LevenshteinDistance.EditDistance(hunName, queriedName) <= BotConfig.LEV_DISTANCE)
-                {
-                    matches.Add(hun);
-                }
-                //Full name wasnt a match, try all the nicks, seperated by ;
-                else
-                {
-                    foreach(string nick in hunNick)
-                    {
-                        if(queriedName.Equals(nick))
-                        {
-                            matches.Add(hun);
-                        }
-                    }
-                }
-            }
-
-            //If no match was found, tell the user
-            if (matches.Count == 0)
-            {
-                await msg.Channel.SendMessageAsync("Huntress not found!");
-                //Console.WriteLine("Huntress not found!");
-            }
-            //If only one match was found, just send it
-            else if(matches.Count == 1)
-            {
-                await SendHuntressDataToServer(msg, matches.First());
-            }
-            //Multiple matches found, tell the user.
-            else
-            {
-                string names = "Did you mean: `";
-                foreach (Huntress hun in matches)
-                {
-                    names += hun.name + "`,`";
-                }
-                names = names.Substring(0, names.Length - 2) + "?";
-                await msg.Channel.SendMessageAsync(names);
-            }
         }
 
         private async Task SendHuntressDataToServer(SocketMessage msg, Huntress hun)
@@ -360,7 +350,7 @@ namespace IHBot
             
         }
 
-#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+        #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
         private Emote[] GetEmotes(string type, string attribute, string rarity)
         {
             Emote[] emotes = new Emote[3];
@@ -405,8 +395,93 @@ namespace IHBot
 
             return emotes;
 
-
-#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+        #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
         }
+        #endregion
+
+        #region Name Processing
+        private async Task<Huntress> GetNameFromQueryAsync(SocketMessage msg)
+        {
+            List<Huntress> matches = new List<Huntress>();
+
+            //Get Huntress Name entered
+            string queriedName = msg.Content.Substring(msg.Content.IndexOf(' ') + 1).ToLower();
+
+            //Check if empty - if no name entered, IndexOf returns -1 and Substring returns the same string, thus queriedName will be the original message.
+            if (String.IsNullOrEmpty(queriedName) || msg.Content.ToLower().Equals(queriedName))
+            {
+                await msg.Channel.SendMessageAsync("No huntress name entered!");
+                return null;
+            }
+
+            //Search for Huntress by entered name - complete match of name or nickname
+            foreach (Huntress hun in huntresses)
+            {
+                string hunName = hun.name.ToLower();
+                string[] hunNick = hun.nick.ToLower().Split(';');
+
+                //If the name is a complete match or starts with it, use it.
+                if (queriedName.Equals(hunName) || hunName.StartsWith(queriedName))
+                {
+                    matches.Add(hun);
+                }
+                //Try full name for a simple typo, done by Levenshtein Distance. TODO: Switch to Damerau-Levenshtein Distance.
+                else if (LevenshteinDistance.EditDistance(hunName, queriedName) <= BotConfig.LEV_DISTANCE)
+                {
+                    matches.Add(hun);
+                }
+                //Full name wasnt a match, try all the nicks, seperated by ;
+                else
+                {
+                    foreach (string nick in hunNick)
+                    {
+                        if (queriedName.Equals(nick))
+                        {
+                            matches.Add(hun);
+                        }
+                    }
+                }
+            }
+
+            //If no match was found, tell the user
+            if (matches.Count == 0)
+            {
+                await msg.Channel.SendMessageAsync("Huntress not found!");
+                //Console.WriteLine("Huntress not found!");
+            }
+            //If only one match was found, just send it
+            else if (matches.Count == 1)
+            {
+                //await SendHuntressDataToServer(msg, matches.First());
+                return matches.First();
+            }
+            //Multiple matches found, tell the user.
+            else
+            {
+                string names = "Did you mean: `";
+                foreach (Huntress hun in matches)
+                {
+                    names += hun.name + "`,`";
+                }
+                names = names.Substring(0, names.Length - 2) + "?";
+                await msg.Channel.SendMessageAsync(names);
+                
+            }
+            return null;
+        }
+
+        #endregion
+
+        #region Debug Commands
+        private async Task TestPrintAll(SocketMessage msg)
+        {
+            foreach (Huntress hun in huntresses)
+            {
+                await SendHuntressDataToServer(msg, hun);
+                await Task.Delay(2000);
+            }
+
+        }
+        #endregion
     }
 }
