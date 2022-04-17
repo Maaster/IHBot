@@ -19,14 +19,14 @@ namespace IHBot.data.tierList
             //.AddField("Type", type)
             //.AddField("Attr", attribute)
             builder.WithTitle(type + " Tier List")
-                //.WithDescription($"{emotes[2]}")
+                .WithDescription("**Disclaimer: This list is based on the JP Community, and as such based on their state of the game!")
                 
                 //TODO: Rework Rarity Emotes on Server - maybe seperate emotes, like :S: :S: :R:?
                 //.WithDescription($"{emotes[2]}" + $"{emotes[0]}" + " " + $"{emotes[1]}")
                 //.WithThumbnailUrl("https://gamewith.akamaized.net/article_tools/dragongirls/gacha/14_c_i.png")
                 .WithColor(Color.Purple)
                 //.WithThumbnailUrl($"attachment://{iconName}")
-                .WithFooter("Bugs? Typos? Suggestions? Contact Maaster#1273!");
+                .WithFooter("Disagree with something? Typos? Suggestions? Contact Maaster#1273 and/or join the discussion on IHC https://discord.com/invite/mfEjXvUbtd !");
 
             foreach(TierListRoleData tier in tiers)
             {

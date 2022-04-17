@@ -10,7 +10,7 @@
                 },
                 {
                     "tier": "S",
-                    "released": "Mochizuki Chiyome, Octavius, Merline, Tamamo-no-Mae, Akechi Mitsuhid",
+                    "released": "Mochizuki Chiyome, Octavius, Merline, Tamamo-no-Mae, Akechi Mitsuhide",
                     "unreleased": "Reginleif, Enako, Thor, Date Masamune, Jing Ke, Huang Zhong (UR), Tokugawa Ieyasu (UR)"
                 },
                 {
@@ -21,44 +21,64 @@
             ]
         },
         {
-            "type": "Defensive",
+            "type": "Support",
             "tiers": [
                 {
                     "tier": "SS",
-                    "released": "",
-                    "unreleased": ""
+                    "released": "Robin Hood",
+                    "unreleased": "Don Quijote, Cleopatra, Hercules, Daji"
                 },
                 {
                     "tier": "S",
-                    "released": "",
-                    "unreleased": ""
+                    "released": "Zhen Ji, Himiko, Takenaka Shigeharu, Copernicus",
+                    "unreleased": "Catherine, Marie Rose, DaVinci (UR)"
                 },
                 {
                     "tier": "A",
-                    "released": "",
+                    "released": "Da Qiao & Xiao Qiao, Honda Tadakatsu, Hannibal, DaVince, Darwin, Michelangelo, Artemis, Morgana",
+                    "unreleased": "Faint, Nene, Kasumi, Misaki"
+                }
+            ]
+        },
+        {
+            "type": "Recovery",
+            "tiers": [
+                {
+                    "tier": "SS",
+                    "released": "Helen",
+                    "unreleased": "Izumo no Okuni (UR)"
+                },
+                {
+                    "tier": "S",
+                    "released": "Izumo no Okuni, Hua Tao",
+                    "unreleased": "Daji, Faint"
+                },
+                {
+                    "tier": "A",
+                    "released": "Mochizuki Chiyomi, Copernicus, Morgan",
                     "unreleased": ""
                 }
             ]
         },
         {
-            "type": "Role x",
+            "type": "Shield",
             "tiers": [
                 {
                     "tier": "SS",
-                    "released": "",
-                    "unreleased": ""
+                    "released": "Hannibal",
+                    "unreleased": "Reginleif, Catherine, Hercules, Mochizuki Chiyomi (UR)"
                 },
                 {
                     "tier": "S",
-                    "released": "",
-                    "unreleased": ""
+                    "released": "Mochizuki Chiyomi, Honda Tadakatsu",
+                    "unreleased": "Carmen, Loki, Date Masamune, Marie Rose, Don Quijote"
                 },
                 {
                     "tier": "A",
-                    "released": "",
-                    "unreleased": ""
+                    "released": "Romulus, Watt, Richard, Zhao Yun, Mozart",
+                    "unreleased": "Misaki"
                 }
             ]
         }
     ]
-}
+ }

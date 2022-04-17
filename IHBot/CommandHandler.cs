@@ -34,6 +34,7 @@ namespace IHBot
             LoadRolesTierList();
         }
 
+        #region Loading JSONs
         private void LoadHuntressData()
         {
             string path = Directory.GetCurrentDirectory();
@@ -69,7 +70,7 @@ namespace IHBot
             string path = Directory.GetCurrentDirectory();
             //path = Path.Combine(path, "data\\huntresses.json");
             path = Path.Combine(path, "data");//.huntresses.json");
-            path = Path.Combine(path, "TierList.json");
+            path = Path.Combine(path, "tierList.json");
             string data = File.ReadAllText(path);
             //data = data.Substring(1, data.Length - 2);
             TierListJSON jsonObj = JsonConvert.DeserializeObject<TierListJSON>(data);
@@ -78,7 +79,7 @@ namespace IHBot
 
 
         }
-
+        #endregion
 
         public async Task HandleMessage(SocketMessage message)
         {
@@ -95,7 +96,9 @@ namespace IHBot
             {
                 await message.Channel.SendMessageAsync("Search for Huntress Info via !huntress <NAME>.\n" +
                     "Search for Status Info via !list <STATUS>.\n" +
-                    "Search for a list of huntresses of an element via !list <ELEMENT>.");
+                    "Search for a list of huntresses of an element via !list <ELEMENT>.\n" +
+                    "Search for quick Tier List of a role via !tier <ROLE>. Valid roles are `Support`,`Offensive`,`Recovery`,`Shield`\n" +
+                    "Search for a detailed Tier List view of one Huntress via !tier <NAME>.");
                 return;
             }
             //Test all Huntresses command. Just usable by me since it floods channels. Maybe use ID here to future-proof and put it in BotConfig? Im too lazy to look up my ID.
@@ -178,7 +181,7 @@ namespace IHBot
             if(list == null)
             {
                 Console.WriteLine("Huntress not found in ProcessTier");
-                await msg.Channel.SendMessageAsync("Huntress wasnt found in Tier Data yet! We are working on it :)");
+                await msg.Channel.SendMessageAsync("Huntress wasnt found in Tier Data yet! We are working on it :) Feel free to help out on IHC! discord.gg/mfEjXvUbtd");
                 return;
             }
             await msg.Channel.SendMessageAsync("", false, list.ToDiscordMessage());
