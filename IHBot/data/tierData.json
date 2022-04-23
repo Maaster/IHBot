@@ -15,7 +15,7 @@
             "cons": "* Good Synergy conversely means she is dependant on team\n* EE30 is underwhelming compared to other units",
             "pve": "9.0",
             "pvp": "8.0",
-            "bossing": "8.0",
+            "bossing": "5.0",
             "notes": "* UR of her gets added later on"
         },
         {
@@ -105,8 +105,8 @@
             "cons": "* Needs to be in burn comp - Honda and/or Mich needed",
             "pve": "8.5",
             "pvp": "9.0",
-            "bossing": "4.0",
-            "notes": "* Chiyo goes brrr"
+            "bossing": "6.0",
+            "notes": "* Chiyo goes brrr\n* A lot of story bosses are burn-able"
         },
         {
             "name": "Napoleon",
@@ -150,8 +150,8 @@
             "cons": "* Needs high SPD",
             "pve": "8.5",
             "pvp": "9.0",
-            "bossing": "4.5",
-            "notes": "* Pretty much needs 4* for US to proc at start"
+            "bossing": "6.5",
+            "notes": "* Pretty much needs 4* for US to proc at start\n* A lot of story bosses are burn-able"
         },
         {
             "name": "Lancelot",
@@ -390,9 +390,9 @@
         {
             "name": "Da Qiao and Xiao Qiao",
             "pros": "* S1 buffs and debuffs -> harder to shut down\n* US gives one of the rare speed buffs\n* Very versatile and pretty much good in any comp",
-            "cons": "* idk lol, suggest something.",
+            "cons": "* Just simply no real synergy",
             "pve": "8.5",
-            "pvp": "7.5",
+            "pvp": "6.0",
             "bossing": "6.5",
             "notes": "Ideally wants 3* so S1 is maxed"
         },
