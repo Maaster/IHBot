@@ -23,6 +23,7 @@ namespace IHBot.data
         {
             //string strRarity = "`" + rarity + "`";
 
+
             EmbedBuilder builder = new EmbedBuilder();
             //.AddField("Huntress", name + "(" + rarity + ")" + " ; " + type + " ; " + attribute)
             //.AddField("Type", type)
@@ -35,13 +36,17 @@ namespace IHBot.data
                 .AddField("PvE Rating", pve)
                 .AddField("PvP Rating", pvp)
                 .AddField("Bossing Rating", bossing)
-                .AddField("Notes", notes)
+                //.AddField("Notes", notes)
                 //TODO: Rework Rarity Emotes on Server - maybe seperate emotes, like :S: :S: :R:?
                 //.WithDescription($"{emotes[2]}" + $"{emotes[0]}" + " " + $"{emotes[1]}")
                 //.WithThumbnailUrl("https://gamewith.akamaized.net/article_tools/dragongirls/gacha/14_c_i.png")
                 .WithColor(Color.Blue)
                 //.WithThumbnailUrl($"attachment://{iconName}")
                 .WithFooter("Disagree with this or have questions? Join the discussion on IHC! discord.gg/mfEjXvUbtd");
+
+
+            if (!String.IsNullOrEmpty(notes))
+                builder.AddField("Notes", notes);
 
             return builder.Build();
         }

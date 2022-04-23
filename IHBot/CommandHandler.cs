@@ -108,9 +108,14 @@ namespace IHBot
                 await TestPrintAll(message);
                 return;
             }
-            
-            //Get command arguments
-            string[] cmd = message.Content.Split(' ');
+            else if (message.Content.StartsWith(BotConfig.PREFIX + "tier testall") && message.Author.Username.Equals("Maaster") && message.Author.DiscriminatorValue.Equals(1273))
+            {
+                await TestPrintAllTier(message);
+                return;
+            }
+
+                //Get command arguments
+                string[] cmd = message.Content.Split(' ');
             //Check for empty. Shouldnt happen as we test for it beforehand, but just to be sure.
             if(cmd == null || cmd.Length == 0)
             {
@@ -137,6 +142,7 @@ namespace IHBot
             }
 
         }
+
 
 
         #region Tier List Commands
@@ -193,6 +199,42 @@ namespace IHBot
         private async Task ProcessListCommand(SocketMessage msg)
         {
             string queriedName = msg.Content.Substring(msg.Content.IndexOf(' ') + 1).ToLower();
+
+            if(queriedName.Equals("dispel buff"))
+            {
+                List<Huntress> matches = new List<Huntress>();
+                string ccInfo = "";
+                //Search all skills for the status and add them to list
+                foreach (Huntress match in huntresses)
+                {
+                    if ((match.skill1.Contains("buff", StringComparison.OrdinalIgnoreCase) && match.skill1.Contains("dispel", StringComparison.OrdinalIgnoreCase) && !match.skill1.Contains("debuff", StringComparison.OrdinalIgnoreCase))
+                        || (match.skill2.Contains("buff", StringComparison.OrdinalIgnoreCase) && match.skill2.Contains("dispel", StringComparison.OrdinalIgnoreCase) && !match.skill2.Contains("debuff", StringComparison.OrdinalIgnoreCase))
+                        || (match.passive1.Contains("buff", StringComparison.OrdinalIgnoreCase) && match.passive1.Contains("dispel", StringComparison.OrdinalIgnoreCase) && !match.passive1.Contains("debuff", StringComparison.OrdinalIgnoreCase))
+                        || (match.passive2.Contains("buff", StringComparison.OrdinalIgnoreCase) && match.passive2.Contains("dispel", StringComparison.OrdinalIgnoreCase) && !match.passive2.Contains("debuff", StringComparison.OrdinalIgnoreCase))
+                        || (match.ee30.Contains("buff", StringComparison.OrdinalIgnoreCase) && match.ee30.Contains("dispel", StringComparison.OrdinalIgnoreCase) && !match.ee30.Contains("debuff", StringComparison.OrdinalIgnoreCase)))
+                        matches.Add(match);
+                }
+
+                string names = "";
+
+                //Fail-safe - shouldnt happen.
+                if (matches.Count > 0)
+                {
+                    //Concat all names for display in Discord
+                    foreach (Huntress match in matches)
+                    {
+                        names += "`" + match.name + "` , ";
+                    }
+                    //Trim end so it looks nice.
+                    names = names.Remove(names.Length - 3);
+                }
+                else
+                {
+                    Console.WriteLine("No matches found in CCInfo for " + queriedName);
+                }
+                await msg.Channel.SendMessageAsync(ccInfo + "\n\n The following Huntresses deal with this Status:\n" + names);
+                return;
+            }
 
             //Check if empty - if no name entered, IndexOf returns -1 and Substring returns the same string, thus queriedName will be the original message.
             if (String.IsNullOrEmpty(queriedName) || msg.Content.ToLower().Equals(queriedName))
@@ -520,6 +562,14 @@ namespace IHBot
                 await Task.Delay(2000);
             }
 
+        }
+        private async Task TestPrintAllTier(SocketMessage msg)
+        {
+            foreach (TierData hun in tierDataList)
+            {
+                await msg.Channel.SendMessageAsync("", false, hun.ToDiscordMessage());
+                await Task.Delay(2000);
+            }
         }
         #endregion
     }
