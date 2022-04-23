@@ -223,7 +223,8 @@ namespace IHBot
                     await ProcessListCommand(message);
                     break;
                 case "tier":
-                    await ProcessTierCommand(message);
+                    //await ProcessTierCommand(message);
+                    await message.Channel.SendMessageAsync("Tier Command disabled for now! We are looking over the last changes, it will be enabled very soon, promise! <3");
                     break;
                 case "top":
                     GetStatRanking(message);
