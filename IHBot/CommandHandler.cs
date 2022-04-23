@@ -32,7 +32,9 @@ namespace IHBot
             LoadHuntressData();
             LoadTierListData();
             LoadRolesTierList();
+
         }
+
 
         #region Loading JSONs
         private void LoadHuntressData()
@@ -75,10 +77,98 @@ namespace IHBot
             //data = data.Substring(1, data.Length - 2);
             TierListJSON jsonObj = JsonConvert.DeserializeObject<TierListJSON>(data);
             tierListsRoles = jsonObj.list;
-            //Console.WriteLine(data);
+            
+        }
+
+        private int CalculateStatRanking(string stat, Huntress huntress)
+        {
+            int ranking = 0;
+            //Copy Huntress List
+            List <Huntress> orderedList = new List<Huntress>(huntresses);
+
+            //Then order it by the stat given - descending order because we want highest
+            switch(stat)
+            {
+                case "might":
+                    orderedList = orderedList.OrderByDescending(h => h.might).ToList();
+                    break;
+                case "atk":
+                    orderedList = orderedList.OrderByDescending(h => h.atk).ToList();
+                    break;
+                case "def":
+                    orderedList = orderedList.OrderByDescending(h => h.def).ToList();
+                    break;
+                case "hp":
+                    orderedList = orderedList.OrderByDescending(h => h.hp).ToList();
+                    break;
+                case "spd":
+                    orderedList = orderedList.OrderByDescending(h => h.spd).ToList();
+                    break;
+
+
+            }
+
+            //Find Ranking of Huntress searched for
+            ranking = orderedList.IndexOf(huntress);
+
+            //Shouldnt happen. Ever.
+            if(ranking == -1)
+            {
+                Console.WriteLine("Huntress not found in orderedList: " + huntress.name);
+            }
+
+            return ranking;
+        }
+
+        private async void GetStatRanking(SocketMessage msg)
+        {
+            string stat = msg.Content.Substring(msg.Content.IndexOf(' ') + 1).ToLower();
+
+            //Check if empty - if no name entered, IndexOf returns -1 and Substring returns the same string, thus queriedName will be the original message.
+            if (String.IsNullOrEmpty(stat) || msg.Content.ToLower().Equals(stat))
+            {
+                await msg.Channel.SendMessageAsync("No stat name entered! Please select from `Might`,`Atk`,`Def`,`HP` or `Spd`");
+                return;
+            }
+
+            //Copy Huntress List
+            List<Huntress> orderedList = new List<Huntress>(huntresses);
+
+
+            string answer = "**Highest/Lowest 5 for " + stat + ":**\n";
+
+            //Then order it by the stat given - descending order because we want highest
+            switch (stat)
+            {
+                case "might":
+                    orderedList = orderedList.OrderByDescending(h => h.might).ToList();
+                    break;
+                case "atk":
+                    orderedList = orderedList.OrderByDescending(h => h.atk).ToList();
+                    break;
+                case "def":
+                    orderedList = orderedList.OrderByDescending(h => h.def).ToList();
+                    break;
+                case "hp":
+                    orderedList = orderedList.OrderByDescending(h => h.hp).ToList();
+                    break;
+                case "spd":
+                    orderedList = orderedList.OrderByDescending(h => h.spd).ToList();
+                    break;
+            }
+
+            answer += "1st: " + orderedList.ElementAt(0).name + "\n";
+            answer += "2nd: " + orderedList.ElementAt(1).name + "\n";
+            answer += "3rd: " + orderedList.ElementAt(2).name + "\n";
+            answer += "4th: " + orderedList.ElementAt(3).name + "\n";
+            answer += "5th: " + orderedList.ElementAt(4).name + "\n";
+
+
+            await msg.Channel.SendMessageAsync(answer);
 
 
         }
+
         #endregion
 
         public async Task HandleMessage(SocketMessage message)
@@ -114,8 +204,8 @@ namespace IHBot
                 return;
             }
 
-                //Get command arguments
-                string[] cmd = message.Content.Split(' ');
+            //Get command arguments
+            string[] cmd = message.Content.Split(' ');
             //Check for empty. Shouldnt happen as we test for it beforehand, but just to be sure.
             if(cmd == null || cmd.Length == 0)
             {
@@ -135,6 +225,9 @@ namespace IHBot
                 case "tier":
                     await ProcessTierCommand(message);
                     break;
+                case "top":
+                    GetStatRanking(message);
+                    break;
                 default:
                     await message.Channel.SendMessageAsync("Command not found!");
                     //Console.WriteLine("Command not found");
@@ -142,8 +235,6 @@ namespace IHBot
             }
 
         }
-
-
 
         #region Tier List Commands
 
@@ -393,6 +484,8 @@ namespace IHBot
             if(huntress == null)
                 return;
 
+
+
             await SendHuntressDataToServer(msg, huntress);
 
         }
@@ -419,6 +512,17 @@ namespace IHBot
 
             //Get and Set Emotes needed for the Huntress
             hun.setEmotes(GetEmotes(hun.type, hun.attribute, hun.rarity));
+
+            //Get and set stat rankings
+            int mightRank, atkRank, defRank, hpRank, spdRank;
+
+            mightRank = CalculateStatRanking("might", hun);
+            atkRank = CalculateStatRanking("atk", hun);
+            defRank = CalculateStatRanking("def", hun);
+            hpRank = CalculateStatRanking("hp", hun);
+            spdRank = CalculateStatRanking("spd", hun);
+
+            hun.SetRanks(mightRank, atkRank, defRank,hpRank,spdRank, huntresses.Count);
 
             //Generate Embed
             Embed embed = hun.ToDiscordMessage();

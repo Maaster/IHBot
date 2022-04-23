@@ -120,7 +120,7 @@
         {
             "name": "Izumo no Okuni",
             "pros": "* Synergizes well with crit team\n* Is a potent healer",
-            "cons": "* Needs high HP pool since she sacrifices it",
+            "cons": "* Needs high HP pool since she sacrifices it\n* ",
             "pve": "7.5",
             "pvp": "5.5",
             "bossing": "8.0",
@@ -331,7 +331,7 @@
             "pve": "5.5",
             "pvp": "4.5",
             "bossing": "4.0",
-            "notes": ""
+            "notes": "* P1 gets more value vs enemy summons"
         },
         {
             "name": "Taishi Ci",
@@ -353,12 +353,12 @@
         },
         {
             "name": "Himiko",
-            "pros": "* Easy to fit in comps\n* S1 binds a target - undodgeable\n* Easy to shut down a target with S1",
+            "pros": "* Easy to fit in comps\n* S1 binds a target in front of her, good to take out key targets\n* Easy to shut down a target with S1",
             "cons": "* Depends a lot on speed",
             "pve": "8.5",
             "pvp": "9.0",
             "bossing": "4.0",
-            "notes": ""
+            "notes": "* Very strong in GA since her Realm does %HP Damage."
         },
         {
             "name": "Hannibal",
