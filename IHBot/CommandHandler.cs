@@ -156,6 +156,9 @@ namespace IHBot
                 case "spd":
                     orderedList = orderedList.OrderByDescending(h => h.spd).ToList();
                     break;
+                default:
+                    await msg.Channel.SendMessageAsync("No valid stat name entered! Please select from `Might`,`Atk`,`Def`,`HP` or `Spd`");
+                    return;
             }
 
             answer += "1st: " + orderedList.ElementAt(0).name + "\n";
@@ -185,11 +188,12 @@ namespace IHBot
             //Help command
             if(message.Content.StartsWith(BotConfig.PREFIX+"help"))
             {
-                await message.Channel.SendMessageAsync("Search for Huntress Info via !huntress <NAME>.\n" +
-                    "Search for Status Info via !list <STATUS>.\n" +
-                    "Search for a list of huntresses of an element via !list <ELEMENT>.\n" +
-                    "Search for quick Tier List of a role via !tier <ROLE>. Valid roles are `Support`,`Offensive`,`Recovery`,`Shield`\n" +
-                    "Search for a detailed Tier List view of one Huntress via !tier <NAME>.");
+                await message.Channel.SendMessageAsync("Search for Huntress Info via `!huntress <NAME>`.\n" +
+                    "Search for Status Info via `!list <STATUS>`.\n" +
+                    "Search for a list of huntresses of an element via `!list <ELEMENT>`.\n" +
+                    "Search for quick Tier List of a role via `!tier <ROLE>`. Valid roles are `Support`,`Offensive`,`Recovery`,`Shield`\n" +
+                    "Search for a detailed Tier List view of one Huntress via `!tier <NAME>`." +
+                    "Search for top huntresses in each given stat by `!top <STAT>`. Valid stat name are `Might`,`Atk`,`Def`,`HP` and `Spd`.");
                 return;
             }
             //Test all Huntresses command. Just usable by me since it floods channels. Maybe use ID here to future-proof and put it in BotConfig? Im too lazy to look up my ID.
