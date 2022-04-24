@@ -117,7 +117,8 @@ namespace IHBot
                 Console.WriteLine("Huntress not found in orderedList: " + huntress.name);
             }
 
-            return ranking;
+            
+            return ranking + 1;
         }
 
         private async void GetStatRanking(SocketMessage msg)
