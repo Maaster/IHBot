@@ -1,5 +1,6 @@
 ﻿using Discord;
 using Discord.WebSocket;
+using DiscordRPC;
 using IHBot.Config;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -15,7 +16,7 @@ namespace IHBot
 
         public async Task MainAsync()
         {
-            //TO PUBLISH FOR LINUX, USE THE PUBLISH CONTEXT MENU AND SELECT LINUX-ARM64 AS RUNTIME ON RELEASE.
+            //TO PUBLISH FOR LINUX, USE THE PUBLISH CONTEXT MENU (RIGHTLICK PROJECT) AND SELECT LINUX-ARM64 AS RUNTIME ON RELEASE.
 
 
             _client = new DiscordSocketClient();

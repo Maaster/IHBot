@@ -13,6 +13,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace IHBot
 {
@@ -22,6 +23,7 @@ namespace IHBot
         private List<Huntress> huntresses;
         private List<TierData> tierDataList;
         private List<TierList> tierListsRoles;
+
 
         // Retrieve client and CommandService instance via ctor
         public CommandHandler(DiscordSocketClient client)
@@ -33,7 +35,43 @@ namespace IHBot
             LoadTierListData();
             LoadRolesTierList();
 
+            SetupStatus();
+
         }
+
+        private void SetupStatus()
+        {
+            System.Timers.Timer myTimer = new System.Timers.Timer();
+            myTimer.Elapsed += new ElapsedEventHandler(UpdateStatus);
+            myTimer.Interval = 1000 * BotConfig.STATUS_UPDATE_INTERVAL; // 1000 ms is one second
+            myTimer.Start();
+            UpdateStatus(null,null);
+        }
+
+        private void UpdateStatus(object? sender, ElapsedEventArgs e)
+        {
+            //Get both now and Server Update time, then set difference as status
+            DateTime now = DateTime.Now;
+            DateTime resetTime = now;
+
+            //Account for next day
+            if (now.Hour >= 12)
+            {
+                //Set time to resetTime
+                TimeSpan ts = new TimeSpan(12, 0, 0);
+                resetTime = resetTime.Date + ts;
+                resetTime = resetTime.AddDays(1);
+            }
+            else
+            {
+                resetTime = new DateTime(now.Year, now.Month, now.Day, 12, 0, 0);
+            }
+
+            TimeSpan diff = resetTime - now;
+
+            _client.SetGameAsync("Server Reset in: " + diff.ToString(@"hh\hmm\m"));
+        }
+
 
 
         #region Loading JSONs
