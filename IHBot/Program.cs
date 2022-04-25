@@ -1,6 +1,5 @@
 ﻿using Discord;
 using Discord.WebSocket;
-using DiscordRPC;
 using IHBot.Config;
 using Microsoft.Extensions.DependencyInjection;
 using System;
