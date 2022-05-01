@@ -4,7 +4,7 @@ using IHBot.Config;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
-namespace IHBot 
+namespace IHBot     
 {
     internal class Program
     {

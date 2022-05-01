@@ -115,9 +115,11 @@ namespace IHBot
             //data = data.Substring(1, data.Length - 2);
             TierListJSON jsonObj = JsonConvert.DeserializeObject<TierListJSON>(data);
             tierListsRoles = jsonObj.list;
-            
-        }
 
+        }
+        #endregion
+
+        #region Stat Rankings
         private int CalculateStatRanking(string stat, Huntress huntress)
         {
             int ranking = 0;
@@ -266,8 +268,8 @@ namespace IHBot
                     await ProcessListCommand(message);
                     break;
                 case "tier":
-                    //await ProcessTierCommand(message);
-                    await message.Channel.SendMessageAsync("Tier Command disabled for now! We are looking over the last changes, it will be enabled very soon, promise! <3");
+                    await ProcessTierCommand(message);
+                    //await message.Channel.SendMessageAsync("Tier Command disabled for now! We are looking over the last changes, it will be enabled very soon, promise! <3");
                     break;
                 case "top":
                     GetStatRanking(message);
@@ -322,7 +324,7 @@ namespace IHBot
             if(list == null)
             {
                 Console.WriteLine("Huntress not found in ProcessTier");
-                await msg.Channel.SendMessageAsync("Huntress wasnt found in Tier Data yet! We are working on it :) Feel free to help out on IHC! discord.gg/mfEjXvUbtd");
+                await msg.Channel.SendMessageAsync("Huntress wasnt found in Tier Data yet! Most likely, this one is not out yet in Global, so we have no knowledge ourselves about her!");
                 return;
             }
             await msg.Channel.SendMessageAsync("", false, list.ToDiscordMessage());

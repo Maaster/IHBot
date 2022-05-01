@@ -24,16 +24,16 @@
             "cons": "* Very Speed dependant\n* Without high strength Octa not as good\n* Chance for Silence low at 25%",
             "pve": "8.0",
             "pvp": "8.0",
-            "bossing": "7.5",
+            "bossing": "6.0",
             "notes": "* UR of her gets added later on"
         },
         {
             "name": "Robin Hood",
             "pros": "* Entwining very strong overall, espc in PvP\n P1 even procs when allies die\n* Wind Chain makes it easier to kill crucial targets in middle/back column",
-            "cons": "* Not effective against bosses\n * EE30+ not that useful apart from certain enemy pvp comps",
+            "cons": "* Not effective against bosses\n* EE30+ not that useful apart from certain enemy pvp comps\n* Random targeting",
             "pve": "9.0",
-            "pvp": "10",
-            "bossing": "8.5",
+            "pvp": "9.0",
+            "bossing": "7.5",
             "notes": ""
         },
         {
@@ -56,8 +56,8 @@
         },
         {
             "name": "Miyamoto Musashi",
-            "pros": "* EE+S1 stacks well for long battles\n* Dodge for 2 turns is fairly good in PvP",
-            "cons": "* No real synergy\n* Fairly RNG dependant",
+            "pros": "* EE+S1 stacks well for long battles\n* Dodge for 2 turns is fairly good in PvP\n* Works well enough in a dodge team",
+            "cons": "* Fairly RNG dependant",
             "pve": "7.0",
             "pvp": "7.5",
             "bossing": "9.0",
@@ -120,9 +120,9 @@
         {
             "name": "Izumo no Okuni",
             "pros": "* Synergizes well with crit team\n* Is a potent healer",
-            "cons": "* Needs high HP pool since she sacrifices it\n* ",
+            "cons": "* Needs high HP pool since she sacrifices it\n* Needs constant Crits",
             "pve": "7.5",
-            "pvp": "5.5",
+            "pvp": "7.5",
             "bossing": "8.0",
             "notes": ""
         },
@@ -168,16 +168,16 @@
             "cons": "* Very weak to Cleansers",
             "pve": "8.5",
             "pvp": "8.0",
-            "bossing": "5.0",
+            "bossing": "6.5",
             "notes": ""
         },
         {
             "name": "Copernicus",
-            "pros": "* One of the few Buff Dispel Sources - coupled with preventing to gain heals/buffs\n* Stun from US can be cleansed before proc",
+            "pros": "* One of the few Buff Dispel Sources - coupled with preventing to gain heals/buffs\n* Stun from US can be cleansed before proc\n* Adds consistency to CC bosses",
             "cons": "* Needs a cleanser on team\n* US only targets one ally\n* P1 only 60% chance",
             "pve": "6.5",
-            "pvp": "6.0",
-            "bossing": "5.0",
+            "pvp": "7.5",
+            "bossing": "7.0",
             "notes": ""
         },
         {
@@ -195,7 +195,7 @@
             "cons": "* If no ally dies and no Status Effects in enemy team, pretty useless",
             "pve": "8.5",
             "pvp": "9.0",
-            "bossing": "7.5",
+            "bossing": "8.5",
             "notes": ""
         },
         {
@@ -249,7 +249,7 @@
             "cons": "* Silence & Cleanse Chance not 100%\n* Low base SPD, but wants to go first to silence",
             "pve": "6.5",
             "pvp": "6.0",
-            "bossing": "7.5",
+            "bossing": "7.0",
             "notes": ""
         },
         {
@@ -290,10 +290,10 @@
         },
         {
             "name": "Hugo",
-            "pros": "* S1 Damage based on %HP of enemy\n* Passive Enemy SPD decrease on EE",
+            "pros": "* S1 Damage based on %HP of enemy\n* Passive Enemy SPD decrease on EE\n* Pairs well with Tamamo EE",
             "cons": "* No instant damage\n* Stun chance only 60%",
-            "pve": "5.5",
-            "pvp": "5.0",
+            "pve": "6.0",
+            "pvp": "7.0",
             "bossing": "4.0",
             "notes": ""
         },
@@ -358,7 +358,7 @@
             "pve": "8.5",
             "pvp": "9.0",
             "bossing": "4.0",
-            "notes": "* Very strong in GA since her Realm does %HP Damage."
+            "notes": "* Very strong in GA since her Realm does %HP Damage without any conditions/CC."
         },
         {
             "name": "Hannibal",
@@ -393,8 +393,17 @@
             "cons": "* Just simply no real synergy",
             "pve": "8.5",
             "pvp": "6.0",
-            "bossing": "6.5",
+            "bossing": "7.5",
             "notes": "Ideally wants 3* so S1 is maxed"
+        },
+        {
+            "name": "Thor",
+            "pros": "* Strong Single/AoE Dmg\n* Universal for all Dragon Bosses",
+            "cons": "* No defensive skills\n* Needs team support to fully utilize EE",
+            "pve": "8.5",
+            "pvp": "8.0",
+            "bossing": "8.5",
+            "notes": "* Very expensive to pull for, since she is a limited Light unit"
         },
         {
             "name": "Sima Yi",
@@ -410,7 +419,7 @@
             "pros": "* P1 very useful for debuffable bosses\n* Good for finishing targets with US\n* Good disruption with S1",
             "cons": "* Low HP and no defensive skills",
             "pve": "7.0",
-            "pvp": "7.0",
+            "pvp": "8.0",
             "bossing": "6.0",
             "notes": ""
         },
