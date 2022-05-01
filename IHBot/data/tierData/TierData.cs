@@ -33,9 +33,9 @@ namespace IHBot.data
                 .WithDescription("**Unless otherwise noted, these ratings are based on lv200+ with EE30+ and the unit in a decent composition!**")
                 .AddField("Pros", pros)
                 .AddField("Cons", cons)
-                .AddField("PvE Rating", pve)
-                .AddField("PvP Rating", pvp)
-                .AddField("Bossing Rating", bossing)
+                .AddField("PvE Rating", pve,true)
+                .AddField("PvP Rating", pvp, true)
+                .AddField("Bossing Rating", bossing, true)
                 //.AddField("Notes", notes)
                 //TODO: Rework Rarity Emotes on Server - maybe seperate emotes, like :S: :S: :R:?
                 //.WithDescription($"{emotes[2]}" + $"{emotes[0]}" + " " + $"{emotes[1]}")
