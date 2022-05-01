@@ -232,8 +232,9 @@ namespace IHBot
                     "Search for Status Info via `!list <STATUS>`.\n" +
                     "Search for a list of huntresses of an element via `!list <ELEMENT>`.\n" +
                     "Search for quick Tier List of a role via `!tier <ROLE>`. Valid roles are `Support`,`Offensive`,`Recovery`,`Shield`\n" +
-                    "Search for a detailed Tier List view of one Huntress via `!tier <NAME>`." +
-                    "Search for top huntresses in each given stat by `!top <STAT>`. Valid stat name are `Might`,`Atk`,`Def`,`HP` and `Spd`.");
+                    "Search for a detailed Tier List view of one Huntress via `!tier <NAME>`.\n" +
+                    "Search for top huntresses in each given stat by `!top <STAT>`. Valid stat name are `Might`,`Atk`,`Def`,`HP` and `Spd`.\n" +
+                    "Use `!gear` for a guide on equipment for huntresses.");
                 return;
             }
             //Test all Huntresses command. Just usable by me since it floods channels. Maybe use ID here to future-proof and put it in BotConfig? Im too lazy to look up my ID.
@@ -273,6 +274,9 @@ namespace IHBot
                     break;
                 case "top":
                     GetStatRanking(message);
+                    break;
+                case "gear":
+                    await message.Channel.SendMessageAsync("'Lost' Guild (Server 8 Global) Guide Spreadsheet: https://docs.google.com/spreadsheets/d/e/2PACX-1vRLaevGXB8SZdgmClLRs9wr0qg7_BHaaZXUFllm4H6H_AtUw-VbRZ7Td19qr2lk9REo5Vf1eMMYzuYs/pubhtml#");
                     break;
                 default:
                     await message.Channel.SendMessageAsync("Command not found!");
