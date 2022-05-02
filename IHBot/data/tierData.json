@@ -259,7 +259,7 @@
             "pve": "9.5",
             "pvp": "9.0",
             "bossing": "9.0",
-            "notes": ""
+            "notes": "* Only dispels one Buff per hit, which can be bad in some specific stages (such as GA45+)"
         },
         {
             "name": "Darwin",
