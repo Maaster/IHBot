@@ -173,7 +173,9 @@ namespace IHBot
             }
 
             //Copy Huntress List
-            List<Huntress> orderedList = new List<Huntress>(huntresses);
+            List<Huntress> orderedListStat = new List<Huntress>(huntresses);
+            List<TierData> orderedListRank = new List<TierData>(tierDataList);
+            string rank = "";
 
 
             string answer = "**Highest/Lowest 5 for " + stat + ":**\n";
@@ -182,30 +184,59 @@ namespace IHBot
             switch (stat)
             {
                 case "might":
-                    orderedList = orderedList.OrderByDescending(h => h.might).ToList();
+                    orderedListStat = orderedListStat.OrderByDescending(h => h.might).ToList();
                     break;
                 case "atk":
-                    orderedList = orderedList.OrderByDescending(h => h.atk).ToList();
+                    orderedListStat = orderedListStat.OrderByDescending(h => h.atk).ToList();
                     break;
                 case "def":
-                    orderedList = orderedList.OrderByDescending(h => h.def).ToList();
+                    orderedListStat = orderedListStat.OrderByDescending(h => h.def).ToList();
                     break;
                 case "hp":
-                    orderedList = orderedList.OrderByDescending(h => h.hp).ToList();
+                    orderedListStat = orderedListStat.OrderByDescending(h => h.hp).ToList();
                     break;
                 case "spd":
-                    orderedList = orderedList.OrderByDescending(h => h.spd).ToList();
+                    orderedListStat = orderedListStat.OrderByDescending(h => h.spd).ToList();
+                    break;
+                case "pve":
+                    orderedListRank = orderedListRank.OrderByDescending(h => h.pve).ToList();
+                    rank = "pve";
+                    break;
+                case "pvp":
+                    orderedListRank = orderedListRank.OrderByDescending(h => h.pvp).ToList();
+                    rank = "pvp";
+                    break;
+                case "boss":
+                    orderedListRank = orderedListRank.OrderByDescending(h => h.bossing).ToList();
+                    rank = "boss";
                     break;
                 default:
-                    await msg.Channel.SendMessageAsync("No valid stat name entered! Please select from `Might`,`Atk`,`Def`,`HP` or `Spd`");
+                    await msg.Channel.SendMessageAsync("No valid stat name entered! Please select from `Might`,`Atk`,`Def`,`HP`,`Spd`,`pve`,`pvp`,`boss`");
                     return;
             }
 
-            answer += "1st: " + orderedList.ElementAt(0).name + "\n";
-            answer += "2nd: " + orderedList.ElementAt(1).name + "\n";
-            answer += "3rd: " + orderedList.ElementAt(2).name + "\n";
-            answer += "4th: " + orderedList.ElementAt(3).name + "\n";
-            answer += "5th: " + orderedList.ElementAt(4).name + "\n";
+            if(String.IsNullOrEmpty(rank))
+            {
+                answer += "1st: " + orderedListStat.ElementAt(0).name + "\n";
+                answer += "2nd: " + orderedListStat.ElementAt(1).name + "\n";
+                answer += "3rd: " + orderedListStat.ElementAt(2).name + "\n";
+                answer += "4th: " + orderedListStat.ElementAt(3).name + "\n";
+                answer += "5th: " + orderedListStat.ElementAt(4).name + "\n";
+            }
+            else
+            {
+                //Jesus this is a mess. Im sorry.
+                answer += "1st: " + orderedListRank.ElementAt(0).name + " - Rating: " + (rank.Equals("pve") ? orderedListRank.ElementAt(0).pve : (rank.Equals("pvp") ? orderedListRank.ElementAt(0).pvp : orderedListRank.ElementAt(0).bossing)) + "\n";
+                answer += "2nd: " + orderedListRank.ElementAt(1).name + " - Rating: " + (rank.Equals("pve") ? orderedListRank.ElementAt(1).pve : (rank.Equals("pvp") ? orderedListRank.ElementAt(1).pvp : orderedListRank.ElementAt(1).bossing)) + "\n";
+                answer += "3rd: " + orderedListRank.ElementAt(2).name + " - Rating: " + (rank.Equals("pve") ? orderedListRank.ElementAt(2).pve : (rank.Equals("pvp") ? orderedListRank.ElementAt(2).pvp : orderedListRank.ElementAt(2).bossing)) + "\n";
+                answer += "4th: " + orderedListRank.ElementAt(3).name + " - Rating: " + (rank.Equals("pve") ? orderedListRank.ElementAt(3).pve : (rank.Equals("pvp") ? orderedListRank.ElementAt(3).pvp : orderedListRank.ElementAt(3).bossing)) + "\n";
+                answer += "5th: " + orderedListRank.ElementAt(4).name + " - Rating: " + (rank.Equals("pve") ? orderedListRank.ElementAt(4).pve : (rank.Equals("pvp") ? orderedListRank.ElementAt(4).pvp : orderedListRank.ElementAt(4).bossing)) + "\n";
+                answer += "6th: " + orderedListRank.ElementAt(5).name + " - Rating: " + (rank.Equals("pve") ? orderedListRank.ElementAt(5).pve : (rank.Equals("pvp") ? orderedListRank.ElementAt(5).pvp : orderedListRank.ElementAt(5).bossing)) + "\n";
+                answer += "7th: " + orderedListRank.ElementAt(6).name + " - Rating: " + (rank.Equals("pve") ? orderedListRank.ElementAt(6).pve : (rank.Equals("pvp") ? orderedListRank.ElementAt(6).pvp : orderedListRank.ElementAt(6).bossing)) + "\n";
+                answer += "8th: " + orderedListRank.ElementAt(7).name + " - Rating: " + (rank.Equals("pve") ? orderedListRank.ElementAt(7).pve : (rank.Equals("pvp") ? orderedListRank.ElementAt(7).pvp : orderedListRank.ElementAt(7).bossing)) + "\n";
+                answer += "9th: " + orderedListRank.ElementAt(8).name + " - Rating: " + (rank.Equals("pve") ? orderedListRank.ElementAt(8).pve : (rank.Equals("pvp") ? orderedListRank.ElementAt(8).pvp : orderedListRank.ElementAt(8).bossing)) + "\n";
+                answer += "10th: " + orderedListRank.ElementAt(9).name + " - Rating: " + (rank.Equals("pve") ? orderedListRank.ElementAt(9).pve : (rank.Equals("pvp") ? orderedListRank.ElementAt(9).pvp : orderedListRank.ElementAt(9).bossing)) + "\n";
+            }
 
 
             await msg.Channel.SendMessageAsync(answer);
@@ -233,7 +264,7 @@ namespace IHBot
                     "Search for a list of huntresses of an element via `!list <ELEMENT>`.\n" +
                     "Search for quick Tier List of a role via `!tier <ROLE>`. Valid roles are `Support`,`Offensive`,`Recovery`,`Shield`\n" +
                     "Search for a detailed Tier List view of one Huntress via `!tier <NAME>`.\n" +
-                    "Search for top huntresses in each given stat by `!top <STAT>`. Valid stat name are `Might`,`Atk`,`Def`,`HP` and `Spd`.\n" +
+                    "Search for top huntresses in each given stat by `!top <STAT>`. Valid stat name are `Might`,`Atk`,`Def`,`HP`,`Spd`,`pve`,`pvp`,`boss`.\n" +
                     "Use `!gear` for a guide on equipment for huntresses.");
                 return;
             }
